@@ -1,0 +1,144 @@
+.sidebar {
+  background-color: rgba(0, 38, 77, 0.6); // Fundo com 70% de opacidade
+  color: #fff;
+  width: $sidebar-width;
+  position: fixed;
+  top: $header-height;
+  bottom: 0;
+  left: 0;
+  overflow: hidden;
+  transform: translateX(0);
+  transition: all 0.3s ease-in-out;
+
+
+    z-index: 10; // Maior que header e footer
+// Sidebar fixa na tela
+
+  
+    ul {
+      list-style: none;
+      padding: 20px 10px;
+  
+      li {
+        padding: 15px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+  
+        a {
+          text-decoration: none;
+          color: inherit;
+          display: flex;
+          align-items: center;
+          gap: 10px;
+        }
+      }
+    }
+  &.collapsed {
+    width: 80px;
+    .menu span {
+      display: none;
+    }
+  }
+
+  .sidebar-toggle {
+    cursor: pointer;
+    padding: 0.75rem;
+    text-align: center;
+    background-color: #495057;
+    color: #fff;
+
+    &:hover {
+      background-color: #6c757d;
+    }
+  }
+
+  nav {
+    .menu {
+      list-style: none;
+      padding: 0;
+      @media (max-width: 768px) {
+        display:flex;
+        flex-direction: column;
+      }
+  
+      li {
+        display: flex;
+        align-items: flex-start;
+
+        .menu-item,
+        a {
+          display: flex;
+          align-items: center;
+          padding: 0 1rem;
+          color: #fff;
+          text-decoration: none;
+          
+          svg {
+            font-size: 1.25rem;
+            margin-right: 1rem;
+          }
+
+          &:hover {
+            background-color: #495057;
+          }
+
+        }
+
+
+        .submenu {
+          list-style: none;
+          padding-left: 2rem;
+          position: relative; /* Garantir que o submenu fique abaixo */
+          z-index: 10; /* Evitar que o submenu seja sobreposto por outros itens */
+          padding-top: 0;
+          padding-bottom: 0;
+
+          li {
+            a {
+              font-size: 0.9rem;
+              color: #fff;
+           
+              &:hover {
+                text-decoration: underline;
+              }
+            }
+          }
+        }
+      }
+    }
+
+    .menu-sub-items{
+      display: flex;
+      flex-direction: column;
+      justify-content: start;
+      
+    }
+  }
+   // Media query para esconder a sidebar em dispositivos móveis
+   @media (max-width: 768px) {
+    width: 0;
+    transform: translateX(-100%); /* Esconde a sidebar fora da tela */
+    .menu {
+      display: none; /* Esconde os itens do menu */
+    }
+
+    .sidebar-toggle {
+      display: block; 
+      @media (max-width: 768px) {
+        display: none;
+      }
+  
+    }
+
+    &.open {
+      width: $sidebar-width; /* Mostra a sidebar quando estiver aberta */
+      transform: translateX(0); /* Restaura a posição da sidebar */
+    }
+
+    .sidebar-toggle {
+      left: 0; /* Posição do ícone de alternância */
+    }
+  }
+}
+//style={{display:'flex', flexDirection: 'column', justifyContent: 'start', alignItems: 'flex-start'}}

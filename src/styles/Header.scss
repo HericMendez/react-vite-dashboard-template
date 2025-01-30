@@ -1,0 +1,49 @@
+@import './_variables';
+
+.header {
+  height: $header-height;
+  justify-content: space-between;
+  background-color: #222;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  padding: 0 1rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+
+  .toggle-sidebar-btn {
+    background: none;
+    border: none;
+    color: #fff;
+    font-size: 1.5rem;
+    cursor: pointer;
+
+    @media (min-width: 768px) {
+   display: none;
+    }
+
+  }
+      
+  h1 {
+    flex: 1;
+    margin-left: 2rem;
+    font-size: 2rem;
+  }
+
+  .header-icons {
+    display: flex;
+    gap: 10px;
+    
+    button {
+      background: none;
+      border: none;
+      color: #fff;
+      font-size: 2rem;
+      cursor: pointer;
+      transition: color 0.3s ease;
+      margin-right: 1rem;
+      &:hover {
+        color: #007bff;
+      }
+    }
+  }
+}
