@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import menuItems from '../configs/menu';
+import menuItems from "../configs/menuConfig";
 
 
 const Sidebar = ({ isSidebarOpen, onToggleSidebar }) => {

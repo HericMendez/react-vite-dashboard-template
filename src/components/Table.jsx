@@ -4,7 +4,7 @@ import throttle from "lodash/throttle";
 import Pagination from "rc-pagination";
 import "rc-pagination/assets/index.css";
 
-import { allData } from "./constants";
+import { allData } from "../constants/tableData";
 
 const tableHead = {
   name: "Campaign Name",
@@ -12,7 +12,7 @@ const tableHead = {
   campaignType: "Type",
   status: "Status",
   channel: "Channel",
-  action: "Actions"
+  action: "Actions",
 };
 
 const Table = () => {
@@ -23,12 +23,12 @@ const Table = () => {
     cloneDeep(allData.slice(0, countPerPage))
   );
   const searchData = React.useRef(
-    throttle(val => {
+    throttle((val) => {
       const query = val.toLowerCase();
       setCurrentPage(1);
       const data = cloneDeep(
         allData
-          .filter(item => item.name.toLowerCase().indexOf(query) > -1)
+          .filter((item) => item.name.toLowerCase().indexOf(query) > -1)
           .slice(0, countPerPage)
       );
       setCollection(data);
@@ -43,14 +43,14 @@ const Table = () => {
     }
   }, [value]);
 
-  const updatePage = p => {
+  const updatePage = (p) => {
     setCurrentPage(p);
     const to = countPerPage * p;
     const from = to - countPerPage;
     setCollection(cloneDeep(allData.slice(from, to)));
   };
 
-  const tableRows = rowData => {
+  const tableRows = (rowData) => {
     const { key, index } = rowData;
     const tableCell = Object.keys(tableHead);
     const columnData = tableCell.map((keyD, i) => {
@@ -76,7 +76,7 @@ const Table = () => {
         <input
           placeholder="Search Campaign"
           value={value}
-          onChange={e => setValue(e.target.value)}
+          onChange={(e) => setValue(e.target.value)}
         />
       </div>
       <table>

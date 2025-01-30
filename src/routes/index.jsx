@@ -1,33 +1,32 @@
-import { Routes as RouterRoutes, Route, Navigate } from "react-router-dom";
-import { protectedRoutes, publicRoutes } from "../configs/routes";
-import ProtectedRoute from "./ProtectedRoute";
-import PublicRoute from "./PublicRoute";
+import { Routes, Route, Navigate } from "react-router-dom";
+import { routes } from "../configs/routesConfig";
+import ProtectedRoute from "./PrivateRoute";
+import PrivateRoute from "./PrivateRoute";
 
 const AppRoutes = () => {
+  const isPrivate = ({ route }) => {
+    if (route.isPrivate) {
+      return <PrivateRoute Item={route.element} />;
+    }
+    return route.element;
+  };
+
   return (
-    <RouterRoutes>
+    <Routes>
       {/* Rotas protegidas */}
       <Route element={<ProtectedRoute />}>
-        {protectedRoutes.map((route, index) => (
+        {routes.map((route, index) => (
           <Route
             key={route.key + index}
             path={route.path}
-            element={route.element}
+            element={isPrivate(route.element)}
           />
-        ))}
-        <Route path="*" element={<Navigate to="/" replace />} />
-      </Route>
-
-      {/* Rotas públicas */}
-      <Route element={<PublicRoute />}>
-        {publicRoutes.map((route) => (
-          <Route key={route.path} path={route.path} element={route.element} />
         ))}
       </Route>
 
       {/* Redirecionamento para a página inicial caso a rota não seja encontrada */}
       <Route path="*" element={<Navigate to="/" replace />} />
-    </RouterRoutes>
+    </Routes>
   );
 };
 
