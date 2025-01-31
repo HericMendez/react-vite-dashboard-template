@@ -8,23 +8,23 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     const userToken = localStorage.getItem("user_token");
     const usersStorage = localStorage.getItem("users_bd");
-
+    /*    */
     if (userToken && usersStorage) {
-      const hasUser = JSON.parse(usersStorage)?.filter(
+      const hasEmail = JSON.parse(usersStorage)?.filter(
         (user) => user.email === JSON.parse(userToken).email
       );
 
-      if (hasUser) setUser(hasUser[0]);
+      if (hasEmail) setUser(hasEmail[0]);
     }
   }, []);
 
   const login = (email, password) => {
     const usersStorage = JSON.parse(localStorage.getItem("users_bd"));
 
-    const hasUser = usersStorage?.filter((user) => user.email === email);
+    const hasEmail = usersStorage?.filter((user) => user.email === email);
 
-    if (hasUser?.length) {
-      if (hasUser[0].email === email && hasUser[0].password === password) {
+    if (hasEmail?.length) {
+      if (hasEmail[0].email === email && hasEmail[0].password === password) {
         const token = Math.random().toString(36).substring(2);
         localStorage.setItem("user_token", JSON.stringify({ email, token }));
         setUser({ email, password });
@@ -37,21 +37,37 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  const register = (email, password) => {
+  const register = (username, email, password) => {
     const usersStorage = JSON.parse(localStorage.getItem("users_bd"));
 
-    const hasUser = usersStorage?.filter((user) => user.email === email);
+    const hasUsername = usersStorage?.filter(
+      (user) => user.username === username
+    );
 
-    if (hasUser?.length) {
+    const hasEmail = usersStorage?.filter((user) => user.email === email);
+
+    if (hasEmail?.length) {
       return "Já tem uma conta com esse E-mail";
+    }
+
+    if (hasUsername?.length) {
+      return "Já existe um usuário com este nome";
     }
 
     let newUser;
 
     if (usersStorage) {
-      newUser = [...usersStorage, { email, password }];
+      const sortedUsers = usersStorage.sort(function (a, b) {
+        return a.id - b.id;
+      });
+
+      const lastId = sortedUsers[sortedUsers.length - 1]?.id;
+      newUser = [
+        ...usersStorage,
+        { id: lastId + 1, username, email, password },
+      ];
     } else {
-      newUser = [{ email, password }];
+      newUser = [{ id: 1, username, email, password }];
     }
 
     localStorage.setItem("users_bd", JSON.stringify(newUser));
@@ -64,9 +80,27 @@ export const AuthProvider = ({ children }) => {
     localStorage.removeItem("user_token");
   };
 
+  const deleteAccount = () => {
+    const usersStorage = JSON.parse(localStorage.getItem("users_bd"));
+    const newUsersStorage = usersStorage.filter(
+      (obj) => obj.email !== user.email
+    );
+    console.log("currentUser:", user);
+    console.log("Users without current:", newUsersStorage);
+    localStorage.setItem("users_bd", JSON.stringify(newUsersStorage));
+  };
+  // deleteAccount();
+
   return (
     <AuthContext.Provider
-      value={{ user, signed: !!user, login, register, logout }}
+      value={{
+        user: user,
+        signed: !!user,
+        login,
+        register,
+        logout,
+        deleteAccount,
+      }}
     >
       {children}
     </AuthContext.Provider>

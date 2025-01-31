@@ -1,11 +1,12 @@
 // routes.js
 import Home from "../pages/app/Home";
-import Analytics from "../pages/app/Analytics";
-import Insights from "../pages/app/Insights";
+
+
 import Settings from "../pages/app/Settings";
 import Login from "../pages/auth/Login";
 import Todo from "../pages/app/Todo";
 import Register from "../pages/auth/Register";
+import TablePage from "../pages/app/Table";
 
 export const routes = [
   {
@@ -14,18 +15,7 @@ export const routes = [
     element: <Home />,
     isPrivate: true,
   },
-  {
-    key: "analytics",
-    path: "/analytics",
-    element: <Analytics />,
-    isPrivate: true,
-  },
-  {
-    key: "insights",
-    path: "/analytics/insights",
-    element: <Insights />,
-    isPrivate: true,
-  },
+
   {
     key: "settings",
     path: "/settings",
@@ -34,8 +24,14 @@ export const routes = [
   },
   {
     key: "todo",
-    path: "/todo",
+    path: "/components/todo",
     element: <Todo />,
+    isPrivate: true,
+  },
+  {
+    key: "table",
+    path: "/components/table",
+    element: <TablePage />,
     isPrivate: true,
   },
   {

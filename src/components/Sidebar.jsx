@@ -12,43 +12,62 @@ const Sidebar = ({ isSidebarOpen, onToggleSidebar }) => {
   // Alternar submenu
   const toggleSubMenu = (menu) => {
     setActiveMenu(activeMenu === menu ? null : menu);
+
+    if (!sidebarVisible) {
+      setSidebarVisible(true);
+    }
   };
 
+  useEffect(() => {
+    if (!sidebarVisible) {
+      setActiveMenu(null);
+    }
+  }, [sidebarVisible]);
 
   useEffect(() => {
-    setSidebarVisible(isSidebarOpen)
+    setSidebarVisible(isSidebarOpen);
   }, [isSidebarOpen]);
 
   return (
-    <aside className={`sidebar ${isSidebarOpen ? 'open' : ''} ${sidebarVisible ? 'expanded' : 'collapsed'}`}>
- 
+    <aside
+      className={`sidebar ${isSidebarOpen ? "open" : ""} ${
+        sidebarVisible ? "expanded" : "collapsed"
+      }`}
+    >
       <div className="sidebar-toggle" onClick={onToggleSidebar}>
-        {sidebarVisible ? '<<' : '>>'}
+        {sidebarVisible ? "<<" : ">>"}
       </div>
 
-
       <nav>
-        <ul  className="menu">
+        <ul className="menu">
           {menuItems.map((item) => (
             <>
-            <li className='menu-sub-items' key={item.key} onClick={item.subItems ? () => toggleSubMenu(item.key) : onToggleSidebar}>
-            <Link to={item.path || '#'} className="menu-item">
-                {item.icon}
-                {sidebarVisible && <span>{item.label}</span>}
-              </Link>
-              {item.subItems && activeMenu === item.key && (
-                <ul className="submenu">
-                  {item.subItems.map((subItem) => (
-                    <li key={subItem.key} onClick={onToggleSidebar}>
-                      <Link to={subItem.path}>{subItem.label}</Link>
-                    </li>
-                  ))}
-                </ul>
-              )}
-            </li>
+              <li
+                className="menu-sub-items"
+                key={item.key}
+                onClick={
+                  item.subItems
+                    ? () => toggleSubMenu(item.key)
+                    : onToggleSidebar
+                }
+              >
+                <Link to={item.path || "#"} className="menu-item">
+                  {item.icon}
+                  {sidebarVisible && <span>{item.label}</span>}
+                </Link>
+                {item.subItems && activeMenu === item.key && (
+                  <ul className="submenu">
+                    {item.subItems.map((subItem) => (
+                      <li key={subItem.key} onClick={onToggleSidebar}>
+                        {subItem.icon}{" "}
+                        <Link to={subItem.path}>{subItem.label}</Link>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </li>
             </>
           ))}
-
         </ul>
       </nav>
     </aside>

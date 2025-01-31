@@ -5,7 +5,7 @@ import PasswordInput from "../../components/PasswordInput";
 
 const Register = () => {
   const [email, setEmail] = useState("");
-  const [confirmEmail, setConfirmEmail] = useState("");
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState("");
@@ -16,20 +16,18 @@ const Register = () => {
   const handleRegister = async (e) => {
     e.preventDefault();
 
-    if (!email || !confirmEmail || !password || !confirmPassword) {
-      setError("Preencha todos os campos");
+    if (!username || !email || !password || !confirmPassword) {
+      setError("Preencha todos os campos!");
       return;
     }
-    if (email !== confirmEmail) {
-      setError("Os e-mails não são iguais!");
-      return;
-    }
+
     if (password !== confirmPassword) {
       setError("As senhas não conferem!");
       return;
     }
 
-    const res = await register(email, password);
+    const res = await register(username, email, password);
+
     if (res) {
       setError(res);
       return;
@@ -45,23 +43,23 @@ const Register = () => {
         <h2>Bem-vindo</h2>
         <form onSubmit={handleRegister}>
           <input
-            type="email"
-            name="email"
-            placeholder="E-mail"
-            value={email}
+            type="text"
+            name="username"
+            placeholder="Nome de usuário"
+            value={username}
             onChange={(e) => {
-              setEmail(e.target.value);
+              setUsername(e.target.value);
               setError("");
             }}
             required
           />
           <input
             type="email"
-            name="confirmEmail"
+            name="email"
             placeholder="Confirme seu e-mail"
-            value={confirmEmail}
+            value={email}
             onChange={(e) => {
-              setConfirmEmail(e.target.value);
+              setEmail(e.target.value);
               setError("");
             }}
             required

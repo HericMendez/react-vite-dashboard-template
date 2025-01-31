@@ -1,34 +1,37 @@
 // menu.js
-import { FaHome, FaChartBar, FaCog, FaList } from 'react-icons/fa';
+import { FaHome, FaCog, FaList, FaReact } from "react-icons/fa";
 
 const menuItems = [
   {
-    key: 'home',
-    label: 'Home',
+    key: "home",
+    label: "Home",
     icon: <FaHome />,
-    path: '/',
+    path: "/",
   },
   {
-    key: 'analytics',
-    label: 'Screens',
-    icon: <FaChartBar />,
+    key: "components",
+    label: "Components",
+    icon: <FaReact />,
     subItems: [
-      { key: 'login', label: 'Login', path: '/screens/login' },
-
+      {
+        key: "todo",
+        label: "Todo List",
+        path: "/components/todo",
+        icon: <FaList />,
+      },
+      {
+        key: "table",
+        label: "Table",
+        path: "/components/table",
+        icon: <FaList />,
+      },
     ],
   },
   {
-    key: 'settings',
-    label: 'Settings',
+    key: "settings",
+    label: "Settings",
     icon: <FaCog />,
-    path: '/settings',
-  },
-
-  {
-    key: 'todo',
-    label: 'Todo List',
-    icon: <FaList />,
-    path: '/todo',
+    path: "/settings",
   },
 ];
 

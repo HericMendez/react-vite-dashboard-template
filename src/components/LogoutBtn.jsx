@@ -7,8 +7,13 @@ const LogoutBtn = () => {
   const navigate = useNavigate();
 
   const handleLogout = () => {
-    logout();
-    navigate("/login");
+
+    if (confirm("Deseja sair?") == true) {
+      logout();
+
+      navigate("/login");
+    } 
+
   };
 
   return (
